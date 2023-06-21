@@ -6,15 +6,16 @@ export class User {
   id: Number;
 
   @Column()
-  phoneNumber?: string
+  phoneNumber?: Number
 
   @Column()
   email?: string
 
-  @Column()
-  linkPrecedence : "secondary"|"primary" // "primary" if it's the first Contact in the link
+  @Column({default : 'primary'})  // why not taking primary or secondary both at a time
+  // linkPrecedence : "primary"|"secondary" // "primary" if it's the first Contact in the link
+  linkPrecedence : string // "primary" if it's the first Contact in the link
 
-  @Column()
+  @Column({default : null})
   linkedId?: Number // the ID of another Contact linked to this one?
 
   @Column()
@@ -23,7 +24,7 @@ export class User {
   @Column()
   updatedAt: Date;
 
-  @Column()
+  @Column({default : null})
   deletedAt?: Date;
 
 }

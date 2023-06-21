@@ -74,3 +74,28 @@ Nest is [MIT licensed](LICENSE).
 
 # identity_reconcilation
 Backend Task Bitespeed
+
+
+CREATE TABLE Contact (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  phoneNumber VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  linkPrecedence ENUM('secondary', 'primary') NOT NULL,
+  linkedId INT,
+  createdAt DATETIME NOT NULL,
+  updatedAt DATETIME NOT NULL,
+  deletedAt DATETIME
+);
+
+CREATE TABLE Contact (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  phoneNumber VARCHAR(255) NULL,
+  email VARCHAR(255) NULL,
+  linkPrecedence ENUM('secondary', 'primary') NOT NULL,
+  linkedId INT,
+  createdAt DATETIME NOT NULL,
+  updatedAt DATETIME NOT NULL,
+  deletedAt DATETIME
+);
+
+npm install date-fns
