@@ -3,7 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule} from '@nestjs/typeorm'
 import { ConfigModule} from '@nestjs/config'
-// import { }
+import { DataSource } from 'typeorm';
+import { UsersModule } from './users/users.module';
+
 
 @Module({
   imports: [
@@ -20,9 +22,12 @@ import { ConfigModule} from '@nestjs/config'
       database : process.env.MYSQL_DATABASE,
       entities : ["dist/orm/*.entity{.ts,.js}"],
       synchronize : false,
-    })
+    }),
+    UsersModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
