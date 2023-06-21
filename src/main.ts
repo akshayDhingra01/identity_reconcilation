@@ -7,3 +7,8 @@ async function bootstrap() {
   await app.listen(process.env.PORT);
 }
 bootstrap();
+
+
+    // this.usersRepository.query(`delete from contact where email = 'akshay.quest.com'`)
+    // return3
+    
