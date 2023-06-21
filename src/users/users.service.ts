@@ -24,37 +24,29 @@ export class UsersService {
       return new BadRequestException("Please Provide either Phone Number or email id ")
     }
 
-    // this.usersRepository.query(`delete from contact where email = 'akshay.quest.com'`)
-    // return3
-    
-
-
     if (createUserDto.email && !createUserDto.phoneNumber) {
 
       let contacts = await this.getUsers(email, null)
-
-      console.log("contacts");
-      console.log(contacts);
-      
-
+    
       if (contacts.length === 0) {
-        return new BadRequestException("No User Found With this email and for creating new one email and phone number both required")
-    }
+        return new BadRequestException(`No User Found With this email and for 
+        creating new one email and phone number both required`)
+      }
+
+      return this.getUsersWhenEmailOrPhoneNumber(contacts)
 
     } else if ( !createUserDto.email && createUserDto.phoneNumber) {
 
       let contacts = await this.getUsers(null, phoneNumber)
-      
-      console.log("contacts");
-      console.log(contacts);
-      
+     
 
       if (contacts.length === 0) {
-        return new BadRequestException("No User Found With this phone Number and for creating new one email and phone number both required")
+        return new BadRequestException(`No User Found With this phone Number and for 
+        creating new one email and phone number both required`)
       }
-      
-      return "phone but not email"
 
+      return this.getUsersWhenEmailOrPhoneNumber(contacts)
+      
       
     } else {
 
@@ -78,15 +70,12 @@ export class UsersService {
 
       }
     
-    return 'This action adds a new user';
   }
 
   async getUsers(email, phoneNumber) {
 
     let contacts
-    // console.log(await this.usersRepository.query(`select * from contact`))
     
-
     if (email != null && phoneNumber != null) {
       contacts = await this.usersRepository.query(`select * from contact where email = (?) or phoneNumber = (?)`, [email, phoneNumber])
     } else if (phoneNumber != null) {
@@ -218,6 +207,8 @@ export class UsersService {
           
           phoneNumbersArray.push(firstPrimaryContact.phoneNumber)
           phoneNumbersArray.push(...secondaryPhoneNumbersArray)        
+
+          this.updatePrimaryAsSecondary(secondPrimaryContact)
   
 
       } else {
@@ -231,7 +222,9 @@ export class UsersService {
           emailsArray.push(...secondaryEmailArray)
           
           phoneNumbersArray.push(secondPrimaryContact.phoneNumber)
-          phoneNumbersArray.push(...secondaryPhoneNumbersArray)        
+          phoneNumbersArray.push(...secondaryPhoneNumbersArray)    
+          
+          this.updatePrimaryAsSecondary(firstPrimaryContact)
   
       }
     }
@@ -245,6 +238,55 @@ export class UsersService {
       }
     }     
 
+  }
+
+  async getUsersWhenEmailOrPhoneNumber(contacts) { // primaryContactCount logic is not there as only one primary account can be there
+    
+    let primaryContacts = []
+    let secondaryContactIds = []
+    let secondaryEmailArray = []
+    let secondaryPhoneNumbersArray = []
+
+    for (let contact of contacts) {
+
+      if (contact.linkPrecedence === 'primary') {      
+        primaryContacts.push(contact)
+      }  else {
+        secondaryContactIds.push(contact.id)
+        secondaryEmailArray.push(contact.email)
+        secondaryPhoneNumbersArray.push(contact.phoneNumber.toString())
+      }
+    }
+    
+    let emailsArray = []
+    let phoneNumbersArray = []   
+
+    let primaryContactId = primaryContacts[0].id
+
+    emailsArray.push(primaryContacts[0].email)
+    emailsArray.push(...secondaryEmailArray)
+    
+    phoneNumbersArray.push(primaryContacts[0].phoneNumber)
+    phoneNumbersArray.push(...secondaryPhoneNumbersArray)        
+
+    return {
+      "contact":{
+        "primaryContatctId": primaryContactId,
+        "emails":  [...new Set(emailsArray)], // first element being email of primary contact 
+        "phoneNumbers": [...new Set( phoneNumbersArray)] ,// first element being phoneNumber of primary contact
+        "secondaryContactIds": secondaryContactIds  // Array of all Contact IDs that are "secondary" to the primary contact
+      }
+    }     
+  }
+
+  async updatePrimaryAsSecondary(primaryContact) {
+
+    await this.usersRepository.query(`UPDATE contact
+        SET linkPrecedence = 'secondary'
+        WHERE id = (?)
+     `, [primaryContact.id])
+
+    return
   }
 
 }
