@@ -1,14 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+// import { UsersRepository } from './users.repository';
+import {  IsNull, Not, Repository } from 'typeorm';
+import { User } from './entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
+
+  async create(createUserDto: CreateUserDto) {
+    console.log("createUserDto");
+    console.log(createUserDto);
+
+    if (!createUserDto.email && createUserDto.phoneNumber) {
+      return new BadRequestException("Please Provide either Phone Number or email id ")
+
+    } else {
+      if (createUserDto["phoneNumber"]) {
+
+      } else {
+        return new BadRequestException("Please Provide either ")
+      }
+    }
+
+
+    
     return 'This action adds a new user';
   }
 
-  findAll() {
+  getUsers() {
     return `This action returns all users`;
   }
 

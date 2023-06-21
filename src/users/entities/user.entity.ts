@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity("Contact")
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: Number;
 
   @Column()
   phoneNumber?: string
@@ -15,7 +15,7 @@ export class User {
   linkPrecedence : "secondary"|"primary" // "primary" if it's the first Contact in the link
 
   @Column()
-  linkedId?: number // the ID of another Contact linked to this one?
+  linkedId?: Number // the ID of another Contact linked to this one?
 
   @Column()
   createdAt: Date;
@@ -26,6 +26,4 @@ export class User {
   @Column()
   deletedAt?: Date;
 
-  @Column({ default: true })
-  isActive: boolean;
 }
