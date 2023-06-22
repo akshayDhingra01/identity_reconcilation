@@ -5,7 +5,8 @@ Backend Task Bitespeed
 
 1. Create Mysql DB
 
-  $ Query : 
+  $ Query :
+  ```
   CREATE TABLE Contact (
     id INT PRIMARY KEY AUTO_INCREMENT,
     phoneNumber VARCHAR(255) NULL,
@@ -16,9 +17,10 @@ Backend Task Bitespeed
     updatedAt DATETIME NOT NULL,
     deletedAt DATETIME
   );
+  ```
 
 2. ADD ENV Variables in .env file
-
+  ```
   $ PORT=3000
 
   $ ~ Mysql Creds
@@ -27,7 +29,7 @@ Backend Task Bitespeed
   $ MYSQL_USER=root
   $ MYSQL_PASSWORD=password
   $ MYSQL_DATABASE=bitespeed
-
+  ```
 3. npm install   <!-- For installing dependencies -->
 
 4. npm run start:dev   <!-- For npm in watch mode -->
