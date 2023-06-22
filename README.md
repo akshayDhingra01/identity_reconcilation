@@ -3,8 +3,9 @@ Backend Task Bitespeed
 
 # Steps To Follow TO start the application
 
-1. Create Mysql DB 
-  Query : 
+1. Create Mysql DB
+
+  $ Query : 
   CREATE TABLE Contact (
     id INT PRIMARY KEY AUTO_INCREMENT,
     phoneNumber VARCHAR(255) NULL,
@@ -18,18 +19,18 @@ Backend Task Bitespeed
 
 2. ADD ENV Variables in .env file
 
-  PORT=3000
+  $ PORT=3000
 
-  ~ Mysql Creds
-  MYSQL_HOST=127.0.0.1
-  MYSQL_PORT=3306
-  MYSQL_USER=root
-  MYSQL_PASSWORD=password
-  MYSQL_DATABASE=bitespeed
+  $ ~ Mysql Creds
+  $ MYSQL_HOST=127.0.0.1
+  $ MYSQL_PORT=3306
+  $ MYSQL_USER=root
+  $ MYSQL_PASSWORD=password
+  $ MYSQL_DATABASE=bitespeed
 
-3. npm install   <!-- For installing dependencies
+3. npm install   <!-- For installing dependencies -->
 
-4. npm run start:dev   <!-- For npm in watch mode
+4. npm run start:dev   <!-- For npm in watch mode -->
 
 5. Endpoint   e.g. {{base_url}}/identify : Here base_url is the url
 
