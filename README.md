@@ -1,5 +1,5 @@
-# identity_reconcilation
-Backend Task Bitespeed
+# Bitespeed Backend Task
+identity_reconcilation
 
 # Steps To Follow TO start the application
 
@@ -52,39 +52,6 @@ Backend Task Bitespeed
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-# For creating Sql Table
-
-CREATE TABLE Contact (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  phoneNumber VARCHAR(255) NULL,
-  email VARCHAR(255) NULL,
-  linkPrecedence ENUM('secondary', 'primary') NOT NULL,
-  linkedId INT,
-  createdAt DATETIME NOT NULL,
-  updatedAt DATETIME NOT NULL,
-  deletedAt DATETIME
-);
-
 
 ## License
 
